@@ -10,7 +10,7 @@ export class AppComponent  {
   constructor(private formBuilder: FormBuilder) {}
 
   myForm = this.formBuilder.group({
-    desposit: ['', [
+    deposit: ['', [
       Validators.required, 
       Validators.min(1),
       Validators.max(1000000)
@@ -18,7 +18,7 @@ export class AppComponent  {
   });
 
   onSubmit() {
-    
+
   }
 
 
