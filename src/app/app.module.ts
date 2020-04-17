@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputCommifiedDirective } from './mat-input-commified.directive';
 
 @NgModule({
   imports: [ 
@@ -13,10 +16,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatCardModule,
     MatInputModule,
     MatFormFieldModule,
+    MatButtonModule,
   ],
-  declarations: [ AppComponent ],
+  declarations: [ AppComponent, MatInputCommifiedDirective ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
