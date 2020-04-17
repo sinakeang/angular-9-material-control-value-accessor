@@ -1,4 +1,12 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<form [formGroup]="myForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Deposit Amount</mat-label>
+    <input matInput matInputCommified formControlName="deposit" type="text" />
+  </mat-form-field>
+</form>
+<button 
+  [disabled]="myForm.invalid" 
+  mat-raised-button 
+  color="primary" 
+  (click)="onSubmit()">Submit
+</button>

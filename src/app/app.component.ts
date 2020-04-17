@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'my-app',
@@ -6,5 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  {
-  name = 'Angular';
+  constructor(private formBuilder: FormBuilder) {}
+
+  myForm = this.formBuilder.group({
+    desposit: ['', [
+      Validators.required, 
+      Validators.min(1),
+      Validators.max(1000000)
+    ]],
+  });
+
+  onSubmit() {
+    
+  }
+
+
 }
