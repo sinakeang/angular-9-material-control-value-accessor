@@ -18,6 +18,7 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
 })
 export class MatInputCommifiedDirective {
   private _value: string | null;
+  @Input() allowNegative = true;
 
   constructor(private elementRef: ElementRef<HTMLInputElement>) {
     console.log('created directive');
@@ -51,7 +52,31 @@ export class MatInputCommifiedDirective {
     }
   }
 
-  @HostListener('input', ['$event.target.value'])
+  @HostListener('keypress') onkeypress(e) {
+    const event = e || window.event;
+    if (event) {
+      return this.isNumberKey(event) || ( this.allowNegative ? this.isNegativeKey(event) : false);
+    }
+  }
+
+  isNumberKey(event) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  isNegativeKey(event) {
+    const charCode = event.which ? event.which : event.keyCode;
+    const charStr = String.fromCharCode(charCode);
+    if (charStr === '-') {
+      return true;
+    }
+    return false;
+  }
+
+  @HostListener('input', ['$event.target.value']) 
   onInput(value) {
     // here we cut any non numerical symbols
     this._value = value.replace(/[^\d.-]/g, '');
@@ -68,9 +93,7 @@ export class MatInputCommifiedDirective {
     this.unFormatValue(); // remove commas for editing purose
   }
 
-  _onChange(value: any): void {
-
-  }
+  _onChange(value: any): void { }
 
   writeValue(value: any) {
     this._value = value;
@@ -81,12 +104,9 @@ export class MatInputCommifiedDirective {
     this._onChange = fn;
   }
 
-  registerOnTouched() {
+  registerOnTouched() { }
 
-  }
-
-  numberWithCommas(value) {
+  private numberWithCommas(value) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
-
 }

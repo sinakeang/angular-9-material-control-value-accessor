@@ -3,8 +3,7 @@
     <input matInput formControlName="totalCurrency" type="text" matInputCommified />
 </form>
 
-
-<div>Total Number: {{ getTotalNumber() | number }}</div>
+<div>Total Number: {{ getTotalNumber() | number: '1.0-0' }}</div>
 <div>Total Currency: {{ getTotalCurrency() | currency }}</div>
 
 <button [disabled]="myForm.invalid" mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
