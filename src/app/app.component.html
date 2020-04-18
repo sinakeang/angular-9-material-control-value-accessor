@@ -1,14 +1,10 @@
 <form [formGroup]="myForm" style="margin-top: 20px">
-  <mat-form-field appearance="outline">
-    <input matInput 
-      matInputCommified 
-      formControlName="deposit" 
-      type="text" />
-  </mat-form-field>
+    <input matInput formControlName="totalNumber" type="text" matInputCommified />
+    <input matInput formControlName="totalCurrency" type="text" matInputCommified />
 </form>
-<button 
-  [disabled]="myForm.invalid" 
-  mat-raised-button 
-  color="primary" 
-  (click)="onSubmit()">Submit
-</button>
+
+
+<div>Total Number: {{ getTotalNumber() | number }}</div>
+<div>Total Currency: {{ getTotalCurrency() | currency }}</div>
+
+<button [disabled]="myForm.invalid" mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
