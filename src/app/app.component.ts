@@ -39,7 +39,7 @@ export class AppComponent  {
 
   getTotalCurrency() {
     const value = this.myForm.get('totalCurrency').value;
-    if (value == '-') {
+    if (value === '-') {
       return 0;
     }
     return value;

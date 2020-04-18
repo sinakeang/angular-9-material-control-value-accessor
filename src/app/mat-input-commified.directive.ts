@@ -3,7 +3,7 @@ import { MAT_INPUT_VALUE_ACCESSOR } from "@angular/material/input";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Directive({
-  selector: 'input[matInputCommified]',
+  selector: 'input[matInputMask]',
   providers: [
     { 
       provide: MAT_INPUT_VALUE_ACCESSOR,
@@ -18,7 +18,8 @@ import { NG_VALUE_ACCESSOR } from "@angular/forms";
 })
 export class MatInputCommifiedDirective {
   private _value: string | null;
-  @Input() allowNegative = true;
+  @Input() allowNegative = false;
+  @Input() allow2DecimalPrecision = false;
 
   constructor(private elementRef: ElementRef<HTMLInputElement>) {
     console.log('created directive');
@@ -55,22 +56,47 @@ export class MatInputCommifiedDirective {
   @HostListener('keypress') onkeypress(e) {
     const event = e || window.event;
     if (event) {
-      return this.isNumberKey(event) || ( this.allowNegative ? this.isNegativeKey(event) : false);
+      return this.isNumberKey(event) 
+      || ( this.allowNegative ? this.isNegativeKey(event) : false)
+      || ( this.allow2DecimalPrecision ? this.isPeriodKey(event) : false);
     }
   }
 
-  isNumberKey(event) {
+  private isNumberKey(event) {
     const charCode = event.which ? event.which : event.keyCode;
+    const value = this.getNativeElementValue();
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    } else if (value.charAt(value.length - 3) === ".") {
       return false;
     }
     return true;
   }
 
-  isNegativeKey(event) {
+  private getNativeElementValue() {
+    return this.elementRef.nativeElement.value;
+  }
+
+  private isNegativeKey(event) {
     const charCode = event.which ? event.which : event.keyCode;
     const charStr = String.fromCharCode(charCode);
-    if (charStr === '-') {
+    const value = this.getNativeElementValue();
+    // if (this.getNativeElementValue().includes('-', 0)) {
+    //   return false;
+    // }
+    if ((charStr === '-') && (value.length === 0)){
+      return true;
+    }
+    return false;
+  }
+
+  private isPeriodKey(event) {
+    const charCode = event.which ? event.which : event.keyCode;
+    const charStr = String.fromCharCode(charCode);
+    if (this.getNativeElementValue().includes('.', 0)) {
+      return false;
+    }
+    else if (charStr === '.') {
       return true;
     }
     return false;

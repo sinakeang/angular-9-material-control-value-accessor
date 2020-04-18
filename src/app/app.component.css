@@ -1,3 +1,7 @@
 p {
   font-family: Lato;
 }
+
+input {
+  text-align: right;
+}

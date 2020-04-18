@@ -1,6 +1,7 @@
 <form [formGroup]="myForm" style="margin-top: 20px">
-    <input matInput formControlName="totalNumber" type="text" matInputCommified />
-    <input matInput formControlName="totalCurrency" type="text" matInputCommified />
+    <input matInput formControlName="totalNumber" type="text" matInputMask />
+    <input matInput formControlName="totalCurrency" type="text" 
+    matInputMask [allowNegative]="true" [allow2DecimalPrecision]="true" />
 </form>
 
 <div>Total Number: {{ getTotalNumber() | number: '1.0-0' }}</div>
